@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/silas-ss/cash-flow/issues"
   },
-  "homepage": "https://github.com/silas-ss/cash-flow#readme"
+  "homepage": "https://github.com/silas-ss/cash-flow#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.9.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^5.3.1"
+  }
 }
