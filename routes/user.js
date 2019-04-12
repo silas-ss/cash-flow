@@ -12,7 +12,7 @@ const userRouter = (app, authorizationMiddleware) => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .get(authorizationMiddleware.verifyJWT, (req, res) => {
+    .get((req, res) => {
       userController.list().then(result => {
         res.status(200).send(result)
       }).catch(err => {
@@ -21,7 +21,7 @@ const userRouter = (app, authorizationMiddleware) => {
     })
 
   app.route('/api/v1/users/:id')
-    .get(authorizationMiddleware.verifyJWT, (req, res) => {
+    .get((req, res) => {
       userController.find(req.params).then(result => {
         if (result !== null) {
           res.status(200).send(result)
@@ -32,14 +32,14 @@ const userRouter = (app, authorizationMiddleware) => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .put(authorizationMiddleware.verifyJWT, (req, res) => {
+    .put((req, res) => {
       userController.update(req.body, req.params).then(result => {
         res.status(200).send(result)
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .delete(authorizationMiddleware.verifyJWT, (req, res) => {
+    .delete((req, res) => {
       userController.delete(req.params).then(result => {
         res.sendStatus(200)
       }).catch(err => {

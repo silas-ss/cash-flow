@@ -16,12 +16,13 @@ const loadModels = (sequelize) => {
 }
 
 const config = {
-  database: 'cash-flow',
+  database: (process.env.NODE_ENV === 'test') ? 'test_cashflow' : 'cashflow',
   username: 'postgres',
   password: 'postgres',
   params: {
     host: 'localhost',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   }
 }
 

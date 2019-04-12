@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const CashInflow = sequelize.define('CashInflow', {
+  const CashOutflow = sequelize.define('CashOutflow', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
-    datePaid: {
+    dateBilled: {
       type: DataTypes.DATEONLY,
       allowNull: false
     }
   }, {
-    tableName: 't_cash_inflow'
+    tableName: 't_cash_outflow'
   })
 
-  return CashInflow
+  return CashOutflow
 }
