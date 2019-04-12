@@ -1,32 +1,32 @@
-const { Sequelize, sequelize } = require('../config/database-config')
+module.exports = (sequelize, DataTypes) => {
+  const CashInflow = sequelize.define('CashInflow', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING
+    },
+    amount: {
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: false
+    },
+    datePaid: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    }
+  }, {
+    tableName: 't_cash_inflow'
+  })
 
-const CashInflow = sequelize.define('cash_inflow', {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
-    primaryKey: true
-  },
-  title: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  description: {
-    type: Sequelize.STRING
-  },
-  amount: {
-    type: Sequelize.DECIMAL(10,2),
-    allowNull: false
-  },
-  datePaid: {
-    type: Sequelize.DATEONLY,
-    allowNull: false
-  },
-  userId: {
-    type: Sequelize.UUID,
-    allowNull: false
-  }
-}, {
-  tableName: 't_cash_inflow'
-})
-
-module.exports = { CashInflow }
+  return CashInflow
+}

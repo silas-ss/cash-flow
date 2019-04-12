@@ -1,29 +1,29 @@
-const { Sequelize, sequelize } = require('../config/database-config')
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    tableName: 't_user'
+  })
 
-const User = sequelize.define('user', {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
-    primaryKey: true
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  role: {
-    type: Sequelize.STRING,
-    allowNull: false
-  }
-}, {
-  tableName: 't_user'
-})
-
-module.exports = { User }
+  return User
+}
