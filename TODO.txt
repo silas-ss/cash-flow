@@ -3,7 +3,10 @@
 - Logout
 - Autorização (feito)
 - Aplicar roles (ADMIN, OPERATOR)
-- CRUD Cash Outflow
+- CRUD Cash Outflow (feito)
 - CRUD Cash Inflow (feito)
 - Report
 - Adicionar criptografia a senha
+
+- Cobertura de testes de integração
+- Cobertura de testes unitários
