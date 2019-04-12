@@ -1,0 +1,9 @@
+- CRUD usuário (feito)
+- Login (feito)
+- Logout
+- Autorização (feito)
+- Aplicar roles (ADMIN, OPERATOR)
+- CRUD Cash Outflow
+- CRUD Cash Inflow (feito)
+- Report
+- Adicionar criptografia a senha

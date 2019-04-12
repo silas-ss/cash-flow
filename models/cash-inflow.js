@@ -1,29 +1,32 @@
 const { Sequelize, sequelize } = require('../config/database-config')
 
-const User = sequelize.define('user', {
+const CashInflow = sequelize.define('cash_inflow', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  name: {
+  title: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  email: {
-    type: Sequelize.STRING,
+  description: {
+    type: Sequelize.STRING
+  },
+  amount: {
+    type: Sequelize.DECIMAL(10,2),
     allowNull: false
   },
-  password: {
-    type: Sequelize.STRING,
+  datePaid: {
+    type: Sequelize.DATEONLY,
     allowNull: false
   },
-  role: {
-    type: Sequelize.STRING,
+  userId: {
+    type: Sequelize.UUID,
     allowNull: false
   }
 }, {
-  tableName: 't_user'
+  tableName: 't_cash_inflow'
 })
 
-module.exports = { User }
+module.exports = { CashInflow }
