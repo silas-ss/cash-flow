@@ -1,5 +1,16 @@
 describe('Routes /cash-outflows', () => {
   const CashOutflow = app.datasource.models.CashOutflow
+  const User = app.datasource.models.User
+
+  const user = {
+    id: '229f6276-5ea0-4c93-a022-d63f856cdf93',
+    name: 'User',
+    email: 'user@test.com',
+    password: 'userpassword',
+    role: 'ADMIN'
+  }
+
+  let token = null
 
   const defaultCashOutflow = {
     id: 'ba5ba00f-9d99-4cb7-91ab-b63255d6144e',
@@ -17,6 +28,21 @@ describe('Routes /cash-outflows', () => {
       })
   })
 
+  // Auth and get token
+  beforeEach(done => {
+    User.destroy({ where: {} })
+      .then(() => User.create(user))
+      .then(() => {
+        request
+          .post('/api/v1/auth')
+          .send({ email: user.email, password: user.password })
+          .end((err, res) => {
+            token = res.body.token
+            done()
+          })
+      })
+  })
+
   describe('Route POST /cash-outflows', () => {
     const newCashOutflow = {
       title: 'Conta de Internet',
@@ -27,6 +53,7 @@ describe('Routes /cash-outflows', () => {
     it ('should create a cash-outflow', done => {
       request.post('/api/v1/cash-outflows')
         .send(newCashOutflow)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(201)
 
@@ -38,6 +65,7 @@ describe('Routes /cash-outflows', () => {
   describe('Route GET /cash-outflows', () => {
     it ('should return a list of cash-outflow', done => {
       request.get('/api/v1/cash-outflows')
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.body[0].id).to.be.eql(defaultCashOutflow.id)
           expect(res.body[0].title).to.be.eql(defaultCashOutflow.title)
@@ -53,6 +81,7 @@ describe('Routes /cash-outflows', () => {
   describe('Route GET /cash-outflows/:id', () => {
     it ('should return a cash-outflow', done => {
       request.get(`/api/v1/cash-outflows/${defaultCashOutflow.id}`)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.body.id).to.be.eql(defaultCashOutflow.id)
           expect(res.body.title).to.be.eql(defaultCashOutflow.title)
@@ -77,6 +106,7 @@ describe('Routes /cash-outflows', () => {
     it ('should update a cash-outflow', done => {
       request.put(`/api/v1/cash-outflows/${defaultCashOutflow.id}`)
         .send(updatedCashOutflow)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.body).to.be.eql([1])
 
@@ -88,6 +118,7 @@ describe('Routes /cash-outflows', () => {
   describe('Route DELETE /cash-outflows/:id', () => {
     it ('should delete a cash-outflow', done => {
       request.delete(`/api/v1/cash-outflows/${defaultCashOutflow.id}`)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(200)
 

@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     datePaid: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      field: 'date_paid'
     }
   }, {
     tableName: 't_cash_inflow'

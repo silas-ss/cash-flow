@@ -1,18 +1,19 @@
 const UserController = require('../controllers/user')
 const JWTService = require('../services/jwt')
+const ServerContext = require('../services/server-context')
 
 const userRouter = (app, authorizationMiddleware) => {
-  const userController = new UserController(app.datasource.models.User, JWTService)
+  const userController = new UserController(app.datasource.models.User, JWTService, ServerContext)
 
   app.route('/api/v1/users')
-    .post((req, res) => {
+    .post(authorizationMiddleware.verifyJWT, (req, res) => {
       userController.register(req.body).then(() => {
         res.sendStatus(203)
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .get((req, res) => {
+    .get(authorizationMiddleware.verifyJWT, (req, res) => {
       userController.list().then(result => {
         res.status(200).send(result)
       }).catch(err => {
@@ -21,7 +22,7 @@ const userRouter = (app, authorizationMiddleware) => {
     })
 
   app.route('/api/v1/users/:id')
-    .get((req, res) => {
+    .get(authorizationMiddleware.verifyJWT, (req, res) => {
       userController.find(req.params).then(result => {
         if (result !== null) {
           res.status(200).send(result)
@@ -32,14 +33,14 @@ const userRouter = (app, authorizationMiddleware) => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .put((req, res) => {
+    .put(authorizationMiddleware.verifyJWT, (req, res) => {
       userController.update(req.body, req.params).then(result => {
         res.status(200).send(result)
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .delete((req, res) => {
+    .delete(authorizationMiddleware.verifyJWT, (req, res) => {
       userController.delete(req.params).then(result => {
         res.sendStatus(200)
       }).catch(err => {
@@ -54,6 +55,12 @@ const userRouter = (app, authorizationMiddleware) => {
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
+    })
+
+  app.route('/api/v1/logout')
+    .get(authorizationMiddleware.verifyJWT, (req, res) => {
+      userController.logout(req.userId)
+      res.sendStatus(204)
     })
 }
 

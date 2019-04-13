@@ -4,14 +4,14 @@ const cashInflowRouter = (app, authorizationMiddleware) => {
   const cashInflowController = new CashInflowController(app.datasource.models.CashInflow)
 
   app.route('/api/v1/cash-inflows')
-    .post((req, res) => {
+    .post(authorizationMiddleware.verifyJWT, (req, res) => {
       cashInflowController.create(req.body).then(() => {
         res.sendStatus(201)
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .get((req, res) => {
+    .get(authorizationMiddleware.verifyJWT, (req, res) => {
       cashInflowController.list().then(result => {
         res.status(200).send(result)
       }).catch(err => {
@@ -20,7 +20,7 @@ const cashInflowRouter = (app, authorizationMiddleware) => {
     })
 
   app.route('/api/v1/cash-inflows/:id')
-    .get((req, res) => {
+    .get(authorizationMiddleware.verifyJWT, (req, res) => {
       cashInflowController.find(req.params).then(result => {
         if (result !== null) {
           res.status(200).send(result)
@@ -31,14 +31,14 @@ const cashInflowRouter = (app, authorizationMiddleware) => {
         res.status(500).send({ msg: err.message })
       })
     }) 
-    .put((req, res) => {
+    .put(authorizationMiddleware.verifyJWT, (req, res) => {
       cashInflowController.update(req.body, req.params).then(result => {
         res.status(200).send(result)
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .delete((req, res) => {
+    .delete(authorizationMiddleware.verifyJWT, (req, res) => {
       cashInflowController.delete(req.params).then(() => {
         res.sendStatus(200)
       }).catch(err => {

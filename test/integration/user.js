@@ -9,17 +9,26 @@ describe('Routes Users', () => {
     role: 'ADMIN'
   }
 
+  var token = null
+
   beforeEach(done => {
     User.destroy({ where: {} })
       .then(() => User.create(user))
       .then(() => {
-        done()
+        request
+          .post('/api/v1/auth')
+          .send({ email: user.email, password: user.password })
+          .end((err, res) => {
+            token = res.body.token
+            done()
+          })
       })
   })
 
   describe('Route GET /users', () => {
     it('should return a list of users', done => {
       request.get('/api/v1/users')
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.body[0].name).to.be.eql(user.name)
           expect(res.body[0].email).to.be.eql(user.email)
@@ -34,6 +43,7 @@ describe('Routes Users', () => {
   describe('Route GET /users/:id', () => {
     it('should return a user', done => {
       request.get('/api/v1/users/229f6276-5ea0-4c93-a022-d63f856cdf93')
+      .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.body.id).to.be.eql(user.id)
           expect(res.body.name).to.be.eql(user.name)
@@ -58,6 +68,7 @@ describe('Routes Users', () => {
     it('should create a user', done => {
       request.post('/api/v1/users')
         .send(user2)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(203)
 
@@ -77,6 +88,7 @@ describe('Routes Users', () => {
     it('should update a user', done => {
       request.put('/api/v1/users/229f6276-5ea0-4c93-a022-d63f856cdf93')
         .send(updatedUser)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.body).to.be.eql([1])
 
@@ -88,6 +100,7 @@ describe('Routes Users', () => {
   describe('Route DELETE /users/:id', () => {
     it('should update a user', done => {
       request.put('/api/v1/users/229f6276-5ea0-4c93-a022-d63f856cdf93')
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(200)
 
@@ -95,6 +108,4 @@ describe('Routes Users', () => {
         })
     })
   })
-
-  // TODO: Test for auth
 })

@@ -1,11 +1,13 @@
 - CRUD usuário (feito)
 - Login (feito)
-- Logout
+- Logout (feito)
 - Autorização (feito)
-- Aplicar roles (ADMIN, OPERATOR)
+- Usar um token por sessão por usuário (feito)
+- Aplicar roles [ADMIN, OPERATOR]
 - CRUD Cash Outflow (feito)
 - CRUD Cash Inflow (feito)
-- Report
+- Report sem intervalo de datas (feito)
+- Report com intervalo de datas (feito)
 - Adicionar criptografia a senha
 
 - Cobertura de testes de integração
