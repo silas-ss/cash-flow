@@ -1,3 +1,5 @@
+const CryptService = require('../../services/crypt')
+
 describe('Routes Users', () => {
   const User = app.datasource.models.User
 
@@ -5,7 +7,7 @@ describe('Routes Users', () => {
     id: '229f6276-5ea0-4c93-a022-d63f856cdf93',
     name: 'User',
     email: 'user@test.com',
-    password: 'userpassword',
+    password: CryptService.cipher('userpassword'),
     role: 'ADMIN'
   }
 
@@ -17,7 +19,7 @@ describe('Routes Users', () => {
       .then(() => {
         request
           .post('/api/v1/auth')
-          .send({ email: user.email, password: user.password })
+          .send({ email: user.email, password: 'userpassword' })
           .end((err, res) => {
             token = res.body.token
             done()
@@ -61,7 +63,7 @@ describe('Routes Users', () => {
       id: '318edf5f-a99d-42a5-98a4-a07ab58a645e',
       name: 'User 2',
       email: 'user2@test.com',
-      password: 'user2password',
+      password: CryptService.cipher('user2password'),
       role: 'OPERATOR'
     }
 
@@ -82,7 +84,7 @@ describe('Routes Users', () => {
       id: '229f6276-5ea0-4c93-a022-d63f856cdf93',
       name: 'User Updated',
       email: 'user@test.com',
-      password: 'userpassword',
+      password: CryptService.cipher('userpassword'),
       role: 'ADMIN'
     }
     it('should update a user', done => {

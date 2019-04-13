@@ -1,4 +1,5 @@
 const serverContext = require('../../services/server-context')
+const CryptService = require('../../services/crypt')
 
 describe('Authentication testing', () => {
   const User = app.datasource.models.User
@@ -7,7 +8,7 @@ describe('Authentication testing', () => {
     id: '229f6276-5ea0-4c93-a022-d63f856cdf93',
     name: 'User',
     email: 'user@test.com',
-    password: 'userpassword',
+    password: CryptService.cipher('userpassword'),
     role: 'ADMIN'
   }
 
@@ -23,7 +24,7 @@ describe('Authentication testing', () => {
     it('should return a token', done => {
       const authData = {
         email: user.email,
-        password: user.password
+        password: 'userpassword'
       }
       request
         .post('/api/v1/auth')
@@ -40,7 +41,7 @@ describe('Authentication testing', () => {
     it('should return the same token', done => {
       const authData = {
         email: user.email,
-        password: user.password
+        password: 'userpassword'
       }
       let token = null
       request
@@ -65,7 +66,7 @@ describe('Authentication testing', () => {
     it('should remove token', done => {
       const authData = {
         email: user.email,
-        password: user.password
+        password: 'userpassword'
       }
       
       request

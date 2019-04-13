@@ -1,3 +1,5 @@
+const CryptService = require('../../services/crypt')
+
 describe('Routes /cash-outflows', () => {
   const CashOutflow = app.datasource.models.CashOutflow
   const User = app.datasource.models.User
@@ -6,7 +8,7 @@ describe('Routes /cash-outflows', () => {
     id: '229f6276-5ea0-4c93-a022-d63f856cdf93',
     name: 'User',
     email: 'user@test.com',
-    password: 'userpassword',
+    password: CryptService.cipher('userpassword'),
     role: 'ADMIN'
   }
 
@@ -35,7 +37,7 @@ describe('Routes /cash-outflows', () => {
       .then(() => {
         request
           .post('/api/v1/auth')
-          .send({ email: user.email, password: user.password })
+          .send({ email: user.email, password: 'userpassword' })
           .end((err, res) => {
             token = res.body.token
             done()

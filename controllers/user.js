@@ -1,11 +1,13 @@
 module.exports = class UserController {
-  constructor (User, JWTService, ServerContext) {
+  constructor (User, JWTService, ServerContext, CryptService) {
     this.User = User
     this.jwtService = JWTService
     this.serverContext = ServerContext
+    this.cryptService = CryptService
   }
 
   register (data) {
+    data.password = this.cryptService.cipher(data.password)
     return this.User.create(data)
       .then(result => result)
       .catch(err => err)
@@ -16,7 +18,8 @@ module.exports = class UserController {
   }
 
   auth (params) {
-    return this.User.findOne({ where: params }).then(user => {
+    const where = { email: params.email, password: this.cryptService.cipher(params.password) }
+    return this.User.findOne({ where }).then(user => {
       if (user !== null) {
         let token = this.serverContext.hasTokenActive(user.id)
         if (token === null) {

@@ -1,9 +1,10 @@
 const UserController = require('../controllers/user')
 const JWTService = require('../services/jwt')
 const ServerContext = require('../services/server-context')
+const CryptService = require('../services/crypt')
 
 const userRouter = (app, authorizationMiddleware) => {
-  const userController = new UserController(app.datasource.models.User, JWTService, ServerContext)
+  const userController = new UserController(app.datasource.models.User, JWTService, ServerContext, CryptService)
 
   app.route('/api/v1/users')
     .post(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
