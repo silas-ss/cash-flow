@@ -4,7 +4,7 @@ const cashOutFlowRouter = (app, authorizationMiddleware) => {
   const cashOutflowController = new CashOutflowController(app.datasource.models.CashOutflow)
 
   app.route('/api/v1/cash-outflows')
-    .post(authorizationMiddleware.verifyJWT, (req, res) => {
+    .post(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
       cashOutflowController.create(req.body)
         .then(() => {
           res.sendStatus(201)
@@ -30,7 +30,7 @@ const cashOutFlowRouter = (app, authorizationMiddleware) => {
           res.status(500).send({ msg: err.message })
         })
     })
-    .put(authorizationMiddleware.verifyJWT, (req, res) => {
+    .put(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
       cashOutflowController.update(req.body, req.params)
         .then(result => {
           res.send(result)
@@ -38,7 +38,7 @@ const cashOutFlowRouter = (app, authorizationMiddleware) => {
           res.status(500).send({ msg: err.message })
         })
     })
-    .delete(authorizationMiddleware.verifyJWT, (req, res) => {
+    .delete(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
       cashOutflowController.delete(req.params)
         .then(() => {
           res.sendStatus(200)

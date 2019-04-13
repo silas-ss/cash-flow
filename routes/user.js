@@ -6,7 +6,7 @@ const userRouter = (app, authorizationMiddleware) => {
   const userController = new UserController(app.datasource.models.User, JWTService, ServerContext)
 
   app.route('/api/v1/users')
-    .post(authorizationMiddleware.verifyJWT, (req, res) => {
+    .post(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
       userController.register(req.body).then(() => {
         res.sendStatus(203)
       }).catch(err => {
@@ -33,14 +33,14 @@ const userRouter = (app, authorizationMiddleware) => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .put(authorizationMiddleware.verifyJWT, (req, res) => {
+    .put(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
       userController.update(req.body, req.params).then(result => {
         res.status(200).send(result)
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
     })
-    .delete(authorizationMiddleware.verifyJWT, (req, res) => {
+    .delete(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
       userController.delete(req.params).then(result => {
         res.sendStatus(200)
       }).catch(err => {

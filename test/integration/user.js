@@ -67,8 +67,8 @@ describe('Routes Users', () => {
 
     it('should create a user', done => {
       request.post('/api/v1/users')
-        .send(user2)
         .set('Authorization', `Bearer ${token}`)
+        .send(user2)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(203)
 

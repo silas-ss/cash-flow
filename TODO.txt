@@ -3,7 +3,7 @@
 - Logout (feito)
 - Autorização (feito)
 - Usar um token por sessão por usuário (feito)
-- Aplicar roles [ADMIN, OPERATOR]
+- Aplicar roles [ADMIN, OPERATOR] (feito)
 - CRUD Cash Outflow (feito)
 - CRUD Cash Inflow (feito)
 - Report sem intervalo de datas (feito)

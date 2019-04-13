@@ -52,8 +52,8 @@ describe('Routes /cash-outflows', () => {
     }
     it ('should create a cash-outflow', done => {
       request.post('/api/v1/cash-outflows')
-        .send(newCashOutflow)
         .set('Authorization', `Bearer ${token}`)
+        .send(newCashOutflow)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(201)
 

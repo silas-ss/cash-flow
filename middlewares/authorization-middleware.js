@@ -14,6 +14,12 @@ const authorizationMiddleware = {
       req.userRole = decoded.role
       next()
     })
+  },
+  hasAdminRole: (req, res, next) => {
+    if (req.userRole !== 'ADMIN') {
+      return res.status(401).send({ msg: 'Unauthorized' })
+    }
+    next()
   }
 }
 
