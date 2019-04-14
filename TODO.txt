@@ -1,0 +1,21 @@
+- CRUD usuário (feito)
+- Login (feito)
+- Logout (feito)
+- Autorização (feito)
+- Usar um token por sessão por usuário (feito)
+- Aplicar roles [ADMIN, OPERATOR] (feito)
+- CRUD Cash Outflow (feito)
+- CRUD Cash Inflow (feito)
+- Report sem intervalo de datas (feito)
+- Report com intervalo de datas (feito)
+- Adicionar criptografia a senha (feito)
+
+- Cobertura de testes de integração (feito)
+- Cobertura de testes unitários (feito)
+
+- Refactoring teste integração (feito)
+
+- Adicionar Dockerfile (feito)
+- Adicionar docker-compose (feito)
+
+- Documentação da API (feito)
