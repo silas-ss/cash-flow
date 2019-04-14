@@ -53,7 +53,7 @@ module.exports = class UserController {
       .catch(err => err)
   }
 
-  delete (req, res) {
+  delete (params) {
     return this.User.destroy({ where: params })
       .then(result => result)
       .catch(err => err)

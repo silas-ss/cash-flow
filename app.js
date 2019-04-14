@@ -11,8 +11,6 @@ const datasource = require('./config/datasource')
 
 const authorizationMiddleware = require('./middlewares/authorization-middleware')
 
-const CryptService = require('./services/crypt')
-
 const app = express()
 
 app.datasource = datasource(app)
@@ -25,15 +23,21 @@ cashInflowRouter(app, authorizationMiddleware)
 cashOutflowRouter(app, authorizationMiddleware)
 reportRouter(app, authorizationMiddleware)
 
-// Create root user
-const User = app.datasource.models.User
-const user = {
-  id: '229f6276-5ea0-4c93-a022-d63f856cdf93',
-  name: 'Root',
-  email: 'root@test.com',
-  password: CryptService.cipher('root'),
-  role: 'ADMIN'
+/*
+ Criando usuário inicial para usar a API
+*/
+if (process.env.NODE_ENV !== 'test') {
+  const CryptService = require('./services/crypt')
+  // Create root user
+  const User = app.datasource.models.User
+  const user = {
+    id: '229f6276-5ea0-4c93-a022-d63f856cdf93',
+    name: 'Root',
+    email: 'root@test.com',
+    password: CryptService.cipher('root'),
+    role: 'ADMIN'
+  }
+  User.upsert(user)
 }
-User.create(user)
 
 module.exports = app

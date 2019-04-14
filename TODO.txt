@@ -2,7 +2,7 @@
 - Login (feito)
 - Logout (feito)
 - Autorização (feito)
-- Usar um token por sessão por usuário
+- Usar um token por sessão por usuário (feito)
 - Aplicar roles [ADMIN, OPERATOR] (feito)
 - CRUD Cash Outflow (feito)
 - CRUD Cash Inflow (feito)
@@ -11,7 +11,7 @@
 - Adicionar criptografia a senha (feito)
 
 - Cobertura de testes de integração (feito)
-- Cobertura de testes unitários
+- Cobertura de testes unitários (feito)
 
 - Refactoring teste integração
 
