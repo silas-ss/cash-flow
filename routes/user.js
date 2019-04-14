@@ -9,7 +9,7 @@ const userRouter = (app, authorizationMiddleware) => {
   app.route('/api/v1/users')
     .post(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
       userController.register(req.body).then(() => {
-        res.sendStatus(203)
+        res.sendStatus(201)
       }).catch(err => {
         res.status(500).send({ msg: err.message })
       })
@@ -42,7 +42,7 @@ const userRouter = (app, authorizationMiddleware) => {
       })
     })
     .delete(authorizationMiddleware.verifyJWT, authorizationMiddleware.hasAdminRole, (req, res) => {
-      userController.delete(req.params).then(result => {
+      userController.delete(req.params).then(() => {
         res.sendStatus(200)
       }).catch(err => {
         res.status(404).send({ msg: "User not found" })

@@ -42,6 +42,9 @@ Todos os próximos recursos necessitam de autorização feita enviando o token d
   "Authorization":"Bearer <token>"
 }
 ```
+### Logout
+Endpoint: ```GET /api/v1/logout```
+
 ### Usuários (users)
 #### Cadastro
 Cadastrar um novo usuário
@@ -181,4 +184,28 @@ Estrutura do relatório:
   "cashInflowAmount": 50000.00, // Total de entrada
   "cashOutflowAmount": 20000.00 // Total de saída
 }
+```
+
+## Rodar os testes
+### Teste unitário
+Para rodar os testes unitários basta executar o comando:
+```bash
+$ npm run unit-test
+```
+
+### Teste de integração
+#### Pré-requisitos
+Definir as váriáveis de ambiente
+```json
+NODE_ENV=test  //Define o ambiente para executar a API em modo teste
+SECRET=mysecret //Define a chave para criptografia da senha e token
+DATABASE_TEST=test_cashflow //Nome do banco de dados para teste, deve estar criado antes de executar os testes
+DATABASE_USERNAME=postgres //Usuário do postgres
+DATABASE_PASSWORD=postgres //Senha do postgres
+DATABASE_HOST=localhost //Endereço do postgres
+```
+
+Para rodar os testes de integração basta executar o comando:
+```bash
+$ NODE_ENV=test SECRET=mysecret DATABASE_TEST=test_cashflow DATABASE_USERNAME=postgres DATABASE_PASSWORD=postgres DATABASE_HOST=localhost npm run integration-test
 ```

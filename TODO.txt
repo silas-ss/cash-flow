@@ -13,7 +13,9 @@
 - Cobertura de testes de integração (feito)
 - Cobertura de testes unitários (feito)
 
-- Refactoring teste integração
+- Refactoring teste integração (feito)
 
 - Adicionar Dockerfile (feito)
 - Adicionar docker-compose (feito)
+
+- Documentação da API (feito)

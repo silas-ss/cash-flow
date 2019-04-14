@@ -11,6 +11,8 @@ describe('Routes Users', () => {
     role: 'ADMIN'
   }
 
+  const defaultAuthData = { email: user.email, password: 'userpassword' }
+
   var token = null
 
   beforeEach(done => {
@@ -19,7 +21,7 @@ describe('Routes Users', () => {
       .then(() => {
         request
           .post('/api/v1/auth')
-          .send({ email: user.email, password: 'userpassword' })
+          .send(defaultAuthData)
           .end((err, res) => {
             token = res.body.token
             done()
@@ -44,7 +46,7 @@ describe('Routes Users', () => {
 
   describe('Route GET /users/:id', () => {
     it('should return a user', done => {
-      request.get('/api/v1/users/229f6276-5ea0-4c93-a022-d63f856cdf93')
+      request.get(`/api/v1/users/${user.id}`)
       .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.body.id).to.be.eql(user.id)
@@ -72,7 +74,7 @@ describe('Routes Users', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(user2)
         .end((err, res) => {
-          expect(res.statusCode).to.be.eql(203)
+          expect(res.statusCode).to.be.eql(201)
 
           done(err)
         })
@@ -87,12 +89,13 @@ describe('Routes Users', () => {
       password: CryptService.cipher('userpassword'),
       role: 'ADMIN'
     }
+    const expectedResponse = [1]
     it('should update a user', done => {
-      request.put('/api/v1/users/229f6276-5ea0-4c93-a022-d63f856cdf93')
+      request.put(`/api/v1/users/${updatedUser.id}`)
         .send(updatedUser)
         .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
-          expect(res.body).to.be.eql([1])
+          expect(res.body).to.be.eql(expectedResponse)
 
           done(err)
         })
@@ -101,7 +104,7 @@ describe('Routes Users', () => {
 
   describe('Route DELETE /users/:id', () => {
     it('should update a user', done => {
-      request.put('/api/v1/users/229f6276-5ea0-4c93-a022-d63f856cdf93')
+      request.put(`/api/v1/users/${user.id}`)
         .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(200)

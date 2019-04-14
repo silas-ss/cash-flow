@@ -12,6 +12,8 @@ describe('Routes CashInflows', () => {
     role: 'ADMIN'
   }
 
+  const defaultAuthData = { email: user.email, password: 'userpassword' }
+
   var token = null
 
   const defaultCashInflow = {
@@ -37,7 +39,7 @@ describe('Routes CashInflows', () => {
       .then(() => {
         request
           .post('/api/v1/auth')
-          .send({ email: user.email, password: 'userpassword' })
+          .send(defaultAuthData)
           .end((err, res) => {
             token = res.body.token
             done()
@@ -104,12 +106,13 @@ describe('Routes CashInflows', () => {
       amount: '5000.00',
       datePaid: '2019-04-12'
     }
+    const expectedResponse = [1]
     it('should update a chash-inflow', done => {
-      request.put('/api/v1/cash-inflows/44f257c8-6256-4ca3-a886-403954b62537')
+      request.put(`/api/v1/cash-inflows/${updatedCashInflow.id}`)
         .send(updatedCashInflow)
         .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
-          expect(res.body).to.be.eql([1])
+          expect(res.body).to.be.eql(expectedResponse)
 
           done(err)
         })
